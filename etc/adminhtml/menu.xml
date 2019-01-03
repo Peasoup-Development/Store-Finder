@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magestore
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magestore.com license that is
+ * available through the world-wide-web at this URL:
+ * http://www.magestore.com/license-agreement.html
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category    Magestore
+ * @package     Magestore_Bannerslider
+ * @copyright   Copyright (c) 2012 Magestore (http://www.magestore.com/)
+ * @license     http://www.magestore.com/license-agreement.html
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+    	<add id="Peasoup_Storefinder::storefinder" title="Store Finder" module="Peasoup_Storefinder" sortOrder="15" resource="Peasoup_Storefinder::storefinder" parent="Magento_Backend::stores" />
+        <add id="Peasoup_Storefinder::storefinder_stores" title="Manage Stores" module="Peasoup_Storefinder" sortOrder="15" action="storefinder/storefinder/index" resource="Peasoup_Storefinder::storefinder" parent="Peasoup_Storefinder::storefinder" />
+    </menu>
+</config>

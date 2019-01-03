@@ -1,0 +1,28 @@
+<div class="store-finder-intro-header ">
+    <div class="store-finder-header">
+        <p>
+            <i class="fa fa-15x fa-map-pin" aria-hidden="true"></i>
+            <?php echo  __('Directions');?>
+        </p>
+    </div>
+</div>
+<div class="store-finder-intro-body">
+    <div  id="directions"  class="storefinder-directions-inner-wrapper" data-bind="scope:'directions'">
+        <!-- ko template: getTemplate() --><!-- /ko -->
+    </div>
+</div>
+<br />
+<script type="text/x-magento-init">
+                {
+                    "*": {
+                        "Magento_Ui/js/core/app": {
+                           "components": {
+                                "directions": {
+                                    "component": "Peasoup_Storefinder/js/directions",
+                                    "template" : "Peasoup_Storefinder/view/directions"
+                                }
+                            }
+                        }
+                    }
+                }
+</script>

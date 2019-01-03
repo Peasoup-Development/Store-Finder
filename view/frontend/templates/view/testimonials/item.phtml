@@ -1,0 +1,55 @@
+<li class="list-group-item" style="border:1px solid #E9E9E9;padding-bottom:0px;">
+    <div id="<?php echo $block->getUserID()?>" class="list-group-item-inner">
+        <div class="panel-heading text-center ">
+            <img style="width:50%;margin-left:25%;height:125px;" class="img-thumbnail img-circle" src="<?php echo $block->getDefaultUserImage()?>" />
+        </div>
+
+        <div class="panel-body">
+            <?php $ratingCount = $block->getRating()?>
+            <?php $difference = 5 - $ratingCount?>
+
+                <br />
+<ul style="width:100%;text-align:center;margin: 0 auto;">
+                        <?php for($i=0;$i < (int) $ratingCount;$i++):?>
+                                <li class="<?php echo $block->getSource()?>" style="float:left;width:30px;height:30px;text-align:center;padding-top:5px;margin-right:5px">
+                                    <i class="fa fa-star fa-white" style="color:white;"></i>
+                                </li>
+                        <?php endfor;?>
+
+            <?php for($i=0;$i < (int) $difference;$i++):?>
+                <li  style="background:#E9E9E9;float:left;width:30px;height:30px;text-align:center;padding-top:5px;margin-right:5px">
+                    <i class="fa fa-star fa-white" style="color:white;"></i>
+                </li>
+            <?php endfor;?>
+
+                </ul>
+            <div style="clear:both">
+                <br />
+                <?php if(strlen($block->getRatingText())>0):?>
+                    <a class="btn btn-primary btn-block text-collapse<?php echo $block->getUserID()?>" rel="#div-collapse<?php echo $block->getUserID()?>">
+                        Show Review  <span class="fa fa-angle-double-down"></span>
+                    </a>
+
+                <?php endif;?>
+                    <a style="border:0px;background:#334455!important;display:<?php echo (strlen($block->getRatingText()) > 0 ? 'block' : 'none' )?>"  class="" id="button-<?php echo $block->getUserID()?>"></a>
+                        <div id="div-collapse<?php echo $block->getUserID()?>" >
+                            <br />
+                            <p><?php echo $block->getRatingText();?></p>
+                        </div>
+                <br />
+            </div>
+        </div>
+
+    </div>
+    <div class="row <?php echo $block->getSource()?>" style="padding: 5px 0px;">
+        <div class="col-md-2 pull-right">
+            <span style="color:#eee;margin-top:6px"  class="fa fa-2x fa-<?php echo str_replace("-class","",$block->getSource())?> <?php echo $block->getSource()?>"></span>
+        </div>
+        <div class="col-md-10">
+            <p style="margin-bottom:0px;position:relative;bottom:2px"><span style="color:#eee;"><?php echo $block->getRatingDate();?></span></p>
+            <p style="margin-bottom:0px;"><span style="color:#eee;" ><?php echo $block->getName();?></span></p>
+
+        </div>
+    </div>
+
+</li>

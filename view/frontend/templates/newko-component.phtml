@@ -1,0 +1,38 @@
+<div id="m2-component" data-bind="scope:'m2kocomponent'">
+    <!-- ko template: getTemplate() --><!-- /ko -->
+    <script type="text/x-magento-init">
+    {
+        "#m2-component": {
+            "Magento_Ui/js/core/app": {
+               "components": {
+                    "m2kocomponent": {
+                        "component": "Peasoup_Storefinder/js/m2kocomponent",
+                        "template" : "Peasoup_Storefinder/m2kocomponent-templatenew"
+                    }
+                }
+            }
+        }
+    }
+    </script>
+
+</div>
+
+<div class="postcode-distance-wrapper">
+
+    <div style="display:inline-block;" data-role="slider-bar" ><?php echo _('Radius:')?></div>
+
+    <div style="display:inline-block;width:300px"  class="smile-es-range-slider" data-role="range-price-slider-price">
+       <div data-role="slider-bar"  ></div>
+    </div>
+
+    <div style="display:inline-block;"  data-role="to-label"><?php echo _('15 Miles')?></div>
+</div>
+
+
+<script type="text/x-magento-init">
+    { "[data-role=range-price-slider-price]" :
+
+    { "distanceSlider" :
+    {"minValue":0,"maxValue":30,"currentValue":
+    {"from":0,"to":100}}} }
+</script>

@@ -1,0 +1,18 @@
+<div class="store-finder-intro-header ">
+    <div class="store-finder-header">
+        <p>
+            <i class="fa fa-15x fa-weixin" aria-hidden="true"></i>
+            <?php echo  __('What Other People Say About Us');?>
+        </p>
+    </div>
+</div>
+<div class="store-finder-intro-body">
+    <div class="store-content-wrapper">
+        <br />
+        <div id="google-reviews" data-role="google-review" class="row"></div>
+        <br />
+        <div class="center-block">
+               <a target="_blank" href="<?php echo $this->getStore()->getData('google_review_url')?>"><button id="read-reviews" class="btn btn-md btn-primary pull-right"><?php echo __('Read All Reviews')?></button></a>
+        </div>
+    </div>
+</div>

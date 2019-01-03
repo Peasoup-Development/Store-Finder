@@ -1,0 +1,91 @@
+<div class="store-finder-intro-header ">
+    <div class="store-finder-header">
+        <p>
+            <i class="fa fa-15x fa-th" aria-hidden="true"></i>
+            <?php echo  __('Store Images');?>
+        </p>
+    </div>
+</div>
+
+<div class="store-finder-intro-body">
+    <div class="row">
+        <div id="gallery" class="col-md-12" data-gallery-role=gallery-placeholder>
+
+        </div>
+    </div>
+</div>
+
+<?php $count=1;?>
+
+<?php $totalCount = count($this->getStoreImages()->getData());?>
+
+<script type="text/x-magento-init">
+  {
+        "[data-gallery-role=gallery-placeholder]": {
+            "mage/gallery/gallery": {
+                "mixins":["magnifier/magnify"],
+                "magnifierOpts": {"fullscreenzoom":"20","top":"","left":"","width":"","height":"","eventType":"hover","enabled":"false"},
+                "data": [
+                    <?php foreach($this->getStoreImages()->getData() as $storeImage):?>
+                    {
+                    "thumb": "<?php echo $this->getMediaPath()."wysiwyg/storefinder/stores/".$storeImage['image']?>",
+                    "img": "<?php echo $this->getMediaPath()."wysiwyg/storefinder/stores/".$storeImage['image']?>",
+                    "full": "<?php echo $this->getMediaPath()."wysiwyg/storefinder/stores/".$storeImage['image']?>",
+                    "caption": "Caption",
+                    "position": "<?php echo $count?>",
+                    "isMain": "<?php echo  ($storeImage['default_image']==1 ? 'true' :'false')?>"
+                    <?php $count++?>
+                    <?php if($totalCount == ($count-1)):?>
+                    }
+                    <?php else:?>
+                    },
+                    <?php endif;?>
+
+                    <?php endforeach;?>
+                ],
+
+                "options": {
+                    "nav": "thumbs",
+                    "loop": true,
+                    "keyboard": true,
+                    "arrows": false,
+                    "allowfullscreen": false,
+                    "showCaption": false,
+                    "thumbwidth": 101,
+                    "thumbheight": 90,
+                    "height": 400,
+                    "maxheight":320,
+                    "maxwidth":450,
+                    "transitionduration": 500,
+                    "transition": "slide",
+                    "navarrows": false,
+                    "navtype": "slides",
+                    "navdir": "horizontal"
+                },
+                "fullscreen": {
+                    "nav": false,
+                    "loop": true,
+                    "navdir": "horizontal",
+                    "navtype": "slides",
+                    "arrows": false,
+                    "showCaption": false,
+                    "transitionduration": 500,
+                    "transition": "dissolve"
+                },
+                "breakpoints": {
+                                "mobile":{
+                                            "conditions":{
+                                            "max-width":"767px"},
+                                            "options":{
+                                            "options":{
+                                            "nav":
+                                            "dots"}
+                                            }
+                                }
+                                }
+                }
+        }
+    }
+</script>
+
+

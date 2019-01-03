@@ -1,0 +1,80 @@
+<div class="store-finder-intro-header ">
+    <div class="store-finder-header">
+        <p>
+            <i class="fa fa-15x fa-clock-o" aria-hidden="true"></i>
+            <?php echo  __('Store Opening Hours');?>
+        </p>
+    </div>
+</div>
+<div class="store-finder-intro-body">
+    <div class="store-content-wrapper">
+        <div class="table-responsive">
+        <table class="table table-condensed table-striped">
+                <tr>
+                    <th>
+                        <p><?php echo  __('Monday');?></p>
+                    </th>
+                    <td>
+                        <p><?php echo $this->getStore()->getData('monday')?></p>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <p><?php echo  __('Tuesday');?></p>
+                    </th>
+                    <td>
+                        <p><?php echo $this->getStore()->getData('tuesday')?></p>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <p><?php echo  __('Wednesday');?></p>
+                    </th>
+                    <td>
+                        <p><?php echo $this->getStore()->getData('wednesday')?></p>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <p><?php echo  __('Thursday');?></p>
+                    </th>
+                    <td>
+                        <p><?php echo $this->getStore()->getData('thursday')?></p>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <p><?php echo  __('Friday');?></p>
+                    </th>
+                    <td>
+                        <p><?php echo $this->getStore()->getData('friday')?></p>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <p><?php echo  __('Saturday');?></p>
+                    </th>
+                    <td>
+                        <p><?php echo $this->getStore()->getData('saturday')?></p>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <p><?php echo  __('Sunday');?></p>
+                    </th>
+                    <td>
+                        <p><?php echo $this->getStore()->getData('sunday')?></p>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <p><?php echo  __('Bank Holiday');?></p>
+                    </th>
+                    <td>
+                        <p><?php echo $this->getStore()->getData('bank')?></p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

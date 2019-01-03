@@ -1,0 +1,51 @@
+<div class="store-finder-intro-header ">
+    <div class="store-finder-header">
+        <p>
+            <i class="fa fa-15x fa-home" aria-hidden="true"></i>
+            <?php echo  __('Store Information');?>
+        </p>
+    </div>
+</div>
+<div class="store-finder-intro-body">
+    <div class="store-content-wrapper">
+        <div class="table-responsive">
+            <table class="table table-condensed table-striped">
+                <tr>
+                    <th>
+                        <p><?php echo  __('Address');?></p>
+                    </th>
+                    <td>
+                        <p><?php echo $this->getStore()->getData('address1')?></p>
+                        <p><?php echo $this->getStore()->getData('address2')?></p>
+                        <p><?php echo $this->getStore()->getTown()?></p>
+                        <p><?php echo $this->getStore()->getCountry()?></p>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <p><?php echo  __('Postcode');?></p>
+                    </th>
+                    <td>
+                        <p><?php echo $this->getStore()->getPostcode()?></p>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <p><?php echo  __('Telephone');?></p>
+                    </th>
+                    <td>
+                        <p><?php echo $this->getStore()->getTelephone()?></p>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <p><?php echo  __('Email');?></p>
+                    </th>
+                    <td>
+                        <p><?php echo $this->getStore()->getEmail()?></p>
+                    </td>
+                </tr>
+            </table>
+    </div>
+    </div>
+</div>

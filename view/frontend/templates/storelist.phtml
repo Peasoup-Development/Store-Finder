@@ -1,0 +1,46 @@
+<div class="store-finder-intro-header ">
+    <div class="store-finder-header">
+        <p><?php echo  __('Store list')?></p>
+    </div>
+</div>
+
+<div class="store-finder-storelist-body">
+    <div id="storelist-wrapper" class="storelist">
+
+        <script type="text/x-magento-init">
+    {
+        "#m2-component": {
+            "Magento_Ui/js/core/app": {
+               "components": {
+                    "m2kocomponent": {
+                        "component": "Peasoup_Storefinder/js/storelist",
+                        "template" : "Peasoup_Storefinder/storelist-template"
+                    }
+                }
+            }
+        }
+    }
+    </script>
+
+        <?php $stores = $this->getStoresCollection()?>
+        <?php foreach($stores as $store):?>
+        <div class="storefinder-store">
+            <div class="storefinder-store-left">
+                <img src="path.html"/>
+            </div>
+            <div class="storefinder-store-right">
+                    <p><?php echo $store->getName()?></p>
+                    <br />
+                    <p><?php echo $store->getAddress1()?></p>
+                    <p><?php echo $store->getAddress2()?></p>
+                    <p><?php echo $store->getTown()?></p>
+                    <p><?php echo $store->getCountry()?></p>
+                    <p><?php echo $store->getTelephone()?></p>
+                    <br />
+                    <p><?php echo _('Directions')?></p>
+                    <button class="action tocart primary"><?php echo _('More Information')?></button>
+            </div>
+        </div>
+        <?php endforeach;?>
+    </div>
+</div>

@@ -1,0 +1,48 @@
+<?php $store = $this->getData('store');?>
+<div class="store-content-wrapper">
+    <div class="store-content-mini-right">
+        <h3><?php echo $store['data']['name']?></h3>
+        <table>
+            <tr>
+                <th>
+                    <p>Address</p>
+                </th>
+                <td>
+                    <p><?php echo $store['data']['address1']?></p>
+                    <p><?php echo $store['data']['address2']?></p>
+                    <p><?php echo $store['data']['town']?></p>
+                    <p><?php echo $store['data']['country']?></p>
+
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <p>Postcode</p>
+                </th>
+                <td>
+                    <p><?php echo $store['data']['postcode']?></p>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <p>Telephone</p>
+                </th>
+                <td>
+                    <p><?php echo $store['data']['telephone']?></p>
+                </td>
+            </tr>
+            <tr>
+                <th><p>Email</p></th>
+                <td>
+                    <p><?php echo $store['data']['email']?></p>
+                </td>
+           </tr>
+            <tr>
+                <th>&nbsp;</th>
+                <td>
+                    <a href="/storefinder/view/index?id=<?php echo $store['data']['store_id']?>"><?php echo __('Get Directions &raquo;')?></a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
