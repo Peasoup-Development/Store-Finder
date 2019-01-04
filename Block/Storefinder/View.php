@@ -14,15 +14,9 @@ class View extends \Magento\Framework\View\Element\Template
     protected $_images;
 
     public $_storesmanager;
-    private $_fbFeed;
     protected $_gFeed;
-    private $_fbTestimonials;
-    private $_ggTestimonials;
     public $limit = 50;
-    /**
-     * @var \Peasoup\Socialfeed\Model\ResourceModel\Testimonial\CollectionFactory
-     */
-    private $collectionFactory;
+
     private $store_id;
     protected $_pageConfig;
     /**
@@ -39,7 +33,6 @@ class View extends \Magento\Framework\View\Element\Template
         StoresRepository $storesRepository,
         \Magento\Framework\View\Page\Config $pageConfig,
         \Magento\Framework\App\Request\Http $request,
-        \Peasoup\Socialfeed\Model\ResourceModel\Testimonial\CollectionFactory $collectionFactory,
         StoresimagesFactory $storesimagesFactory,
         array $data = []
     ) {
@@ -49,7 +42,6 @@ class View extends \Magento\Framework\View\Element\Template
         $this->_request = $request;
         $this->_storesManager = $context->getStoreManager();
         parent::__construct($context, $data);
-        $this->collectionFactory = $collectionFactory;
         $this->_pageConfig = $pageConfig;
     }
 
@@ -74,31 +66,6 @@ class View extends \Magento\Framework\View\Element\Template
 
     public function getStore(){
         return $this->_store;
-    }
-
-    public function getTestimonials() {
-        $collection = $this->collectionFactory->create();
-        $collection->addFilter('store_id' , array('eq'=> $this->store_id));
-
-        $joinConditions[] = 'main_table.platform_id = vsp.platform_id';
-
-
-        $joinConditions = implode(
-            ' AND ', $joinConditions
-        );
-
-        $collection->getSelect()->joinLeft(
-            [
-                'vsp' => $collection->getTable('vapedirect_social_platform')
-            ],
-            $joinConditions,
-            [
-                'platform' => 'vsp.platform'
-            ]
-        );
-        $collection->setOrder('created_at','DESC');
-        $collection->getSelect()->limit(30);
-        return $collection;
     }
 
     public function fixRating($rating){

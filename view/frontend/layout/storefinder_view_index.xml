@@ -14,11 +14,6 @@
                 <block class="Peasoup\Storefinder\Block\Storefinder\View" name="storefinder.view.opening.hours" template="view/opening-hours.phtml" before="-" />
                 <block class="Peasoup\Storefinder\Block\Storefinder\View" name="storefinder.view.gallery" template="view/gallery.phtml" before="-" />
                 <block class="Peasoup\Storefinder\Block\Storefinder\View" name="storefinder.view.reviews" template="view/reviews.phtml" before="-" />
-                <block class="Peasoup\Storefinder\Block\Storefinder\View" name="storefinder.testimonials" template="view/testimonials.phtml" after="-">
-                    <block class="Peasoup\Socialfeed\Block\Socialfeed\Testimonials\Container" name="testimonials_container" as="testimonials.container" >
-                        <block class="Peasoup\Socialfeed\Block\Socialfeed\Testimonials\Container\Item" name="testimonials_item" as="testimonials.item"  template="Peasoup_Storefinder::view/testimonials/item.phtml" />
-                    </block>
-                </block>
                 <block class="Peasoup\Storefinder\Block\Storefinder" name="storefinder.map" template="map.phtml" before="-" />
             </block>
         </referenceContainer>
