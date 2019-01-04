@@ -2,7 +2,7 @@
 namespace Peasoup\Storefinder\Block\Adminhtml\Storefinder\Store\Buttons;
 
 use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
-use Peasoup\Staff\Block\Adminhtml\Newreviews\Edit\GenericButton;
+use Peasoup\Storefinder\Block\Adminhtml\Storefinder\Store\GenericButton;
 /**
  * Class BackButton
  */
