@@ -186,7 +186,7 @@
                 </item>
             </argument>
         </column>
-        <actionsColumn name="actions" class="Peasoup\Staff\Ui\Component\Listing\Column\ViewAction">
+        <actionsColumn name="actions" class="Peasoup\Storefinder\Ui\Component\Listing\Column\StoreActions">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="indexField" xsi:type="string">store_id</item>
