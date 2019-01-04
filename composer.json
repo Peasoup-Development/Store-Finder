@@ -9,7 +9,7 @@
   "require": {
 
   },
-  "type": "magento2-module"
+  "type": "magento2-module",
   "license": [
     "OSL-3.0",
     "AFL-3.0"
