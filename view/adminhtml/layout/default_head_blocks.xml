@@ -1,0 +1,6 @@
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <block class="Peasoup\Storefinder\Block\Storefinder" name="googlemaps.api" template="Peasoup_Storefinder::js/script.phtml" ifconfig="storefindersettings/general/active" />
+
+    </head>
+</page>

@@ -1,40 +1,33 @@
-<div id="storefinder" class="storefinder ">
-    <div class="row">
-        <div class="storefinder-intro-wrapper store-finder-margin col-xs-12">
-            <?php echo $this->getChildHtml('storefinder.view.intro');?>
-        </div>
+<div id="storefinder" class="storefinder">
 
+    <div id="storefinder-notification" class="store-finder-margin">
+        <?php echo $this->getChildHtml('storefinder.view.notification');?>
     </div>
 
-    <div class="row">
-
-        <div class="storefinder-information-wrapper store-finder-margin col-xs-12 col-sm-5 col-md-4 col-lg-4">
-            <?php echo $this->getChildHtml('storefinder.view.directions');?>
-        </div>
-
-        <div class="storefinder-information-wrapper store-finder-margin col-xs-12 col-sm-7  col-md-8 col-lg-8" >
-            <div class="embed-responsive embed-responsive-16by9">
-                <div  id="map"  data-role="storefinder-googlemap" class="fill" style="height:475px;"></div>
-            </div>
-            <br />
-        </div>
+    <div id="storefinder-introduction" class="store-finder-margin">
+        <?php echo $this->getChildHtml('storefinder.view.introduction');?>
     </div>
 
-    <div class="row">
-
-        <div class="storefinder-information-wrapper store-finder-margin col-xs-12 col-sm-5 col-sm-push-7 col-md-4 col-md-push-0 col-lg-4" >
-            <?php echo $this->getChildHtml('storefinder.view.opening.hours');?>
-        </div>
-
-        <div class="storefinder-information-wrapper store-finder-margin col-xs-12 col-sm-7 col-sm-pull-5 col-md-4 col-md-pull-0 col-lg-4">
-            <?php echo $this->getChildHtml('storefinder.view.gallery');?>
-        </div>
-
-        <div class="storefinder-information-wrapper store-finder-margin col-xs-12 col-sm-12 col-md-4  col-lg-4" >
-            <?php echo $this->getChildHtml('storefinder.view.information');?>
-        </div>
-
+    <div id="storefinder-directions" class="store-finder-margin">
+        <?php echo $this->getChildHtml('storefinder.view.directions');?>
     </div>
+
+    <div id="storefinder-map" class="store-finder-margin">
+        <?php echo $this->getChildHtml('storefinder.view.map');?>
+    </div>
+
+    <div id="storefinder-opening-hours" class="store-finder-margin">
+        <?php echo $this->getChildHtml('storefinder.view.opening.hours');?>
+    </div>
+
+    <div id="storefinder-gallery" class="store-finder-margin">
+        <?php echo $this->getChildHtml('storefinder.view.gallery');?>
+    </div>
+
+    <div id="storefinder-information" class="store-finder-margin">
+        <?php echo $this->getChildHtml('storefinder.view.information');?>
+    </div>
+
 
 
 </div>
@@ -42,19 +35,17 @@
 <script type="text/x-magento-init">
                 {
 
-                    "[data-role=storefinder-googlemap]" : {
-                                               "googleMap" :{}
-                                               },
+
                     "*" : {
                         "Peasoup_Storefinder/js/storesList" :
                                                               {
                                                                 "id":"<?php echo $this->getStore()->getId();?>"
                                                               }
                     },
-                     "[data-role=google-review]" : {
-                                               "googlePlaces" :{
-                                                            "placeId":"<?php echo $this->getStore()->getData('placeId');?>"
-                                                   }
+                       "[data-role=storefinder-googlemap]" : {
+                                               "googleMap" :{
+                                                 "id":"<?php echo $this->getStore()->getId();?>"
+                                               }
                                                }
                 }
 </script>

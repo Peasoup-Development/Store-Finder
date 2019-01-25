@@ -15,7 +15,7 @@ class UpgradeSchema implements UpgradeSchemaInterface
 
         if (version_compare($context->getVersion(), '1.1.0') < 0) {
             $table = $setup->getConnection()->newTable(
-            $setup->getTable('vapedirect_storefinder_images')
+            $setup->getTable('peasoup_storefinder_images')
             )->addColumn(
                 'image_id',
                 \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
@@ -66,7 +66,7 @@ class UpgradeSchema implements UpgradeSchemaInterface
 
         }
         if (version_compare($context->getVersion(), '1.3.1') < 0) {
-            $tableName = $setup->getTable('vapedirect_storefinder');
+            $tableName = $setup->getTable('peasoup_storefinder');
             if ($setup->getConnection()->isTableExists($tableName) == true) {
 
                 $setup->getConnection()->addColumn(
@@ -80,40 +80,21 @@ class UpgradeSchema implements UpgradeSchemaInterface
                     ]
                 );
 
-                $setup->getConnection()->addColumn(
-                    $setup->getTable($tableName),
-                    'placeId',
-                    [
-                        'type' =>  \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
-                        'length' => 255,
-                        'nullable' => true,
-                        'comment' => 'Store Google Place Id'
-                    ]
-                );
+
 
             }
 
         }
         if (version_compare($context->getVersion(), '1.3.2') < 0) {
-            $tableName = $setup->getTable('vapedirect_storefinder');
+            $tableName = $setup->getTable('peasoup_storefinder');
             if ($setup->getConnection()->isTableExists($tableName) == true) {
 
-                $setup->getConnection()->addColumn(
-                    $setup->getTable($tableName),
-                    'google_review_url',
-                    [
-                        'type' =>  \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
-                        'length' => 255,
-                        'nullable' => true,
-                        'comment' => 'Google Review URL'
-                    ]
-                );
 
             }
 
         }
         if (version_compare($context->getVersion(), '1.3.3') < 0) {
-            $tableName = $setup->getTable('vapedirect_storefinder');
+            $tableName = $setup->getTable('peasoup_storefinder');
             if ($setup->getConnection()->isTableExists($tableName) == true) {
 
                 $setup->getConnection()->addColumn(
@@ -129,6 +110,24 @@ class UpgradeSchema implements UpgradeSchemaInterface
 
             }
         }
+        if (version_compare($context->getVersion(), '1.3.3') < 0) {
+            $tableName = $setup->getTable('peasoup_storefinder');
+            if ($setup->getConnection()->isTableExists($tableName) == true) {
+
+                $setup->getConnection()->addColumn(
+                    $setup->getTable($tableName),
+                    'slug',
+                    [
+                        'type' =>  \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                        'length' => 255,
+                        'nullable' => true,
+                        'comment' => 'Url Slug'
+                    ]
+                );
+
+            }
+        }
+
         $setup->endSetup();
     }
 }

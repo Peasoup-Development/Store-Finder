@@ -1,4 +1,4 @@
-define(['uiComponent', 'ko','storesModel','jquery',"jquery/ui"], function ( Component, ko, storesModel, $) {
+define(['uiComponent', 'ko','storesModel','searchModel','jquery',"jquery/ui"], function ( Component, ko, storesModel,searchModel, $) {
     'use strict';
     var self;
     return Component.extend({
@@ -12,11 +12,13 @@ define(['uiComponent', 'ko','storesModel','jquery',"jquery/ui"], function ( Comp
 
 
         _getNearestStores:function() {
+            console.log(searchModel);
             var distance = $('[data-role=to-label]').html();
             var postCode = $('#postcodeSearch').val();
             var miles = $("[data-role=slider-bar]").slider("value");
             var self = this;
             if (postCode != "") {
+                alert("asdasdsdads")
                 $.ajax({
                     url: '/storefinder/index/search',
                     type: 'GET',

@@ -1,14 +1,12 @@
-<div class="component-wrapper">
-
   <div data-bind="foreach: stores">
-    <div class="store-content-mini-wrapper">
+    <div class="storefinder-list-item">
 
-      <div class="col-tn-5 col-xs-12 col-sm-6 col-md-5">
-        <br />
+      <div class="storefinder-list-item-image">
+
         <img class="img-responsive img-thumbnail" data-bind="attr: { src: image}" />
       </div>
 
-      <div class="col-tn-7 col-xs-12 col-sm-6 col-md-7">
+      <div class="storefinder-list-item-details">
         <h3 data-bind="text: name"></h3>
         <p data-bind="text: address1"></p>
         <p data-bind="text: address2"></p>
@@ -16,17 +14,18 @@
         <p data-bind="text: country"></p>
         <p data-bind="text: postcode"></p>
 
-        <br />
-        <br />
-        <a data-bind="attr: { href: url}">
-          Get Directions
-        </a>
-        <br />
-        <a data-bind="attr: { href: url}">
-          <button class="btn btn-md btn-primary pull-left">View More</button>
+        <p data-bind="text: telephone"></p>
+
+
+        <p class="storefinder-directions-link">
+          <a  data-bind="attr: { href: url}">
+            Get Directions
+          </a>
+        </p>
+
+        <a data-bind="attr: { href: url}" style="clear:both;">
+          <button class="action primary">View More</button>
         </a>
       </div>
     </div>
   </div>
-
-</div>

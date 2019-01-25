@@ -1,41 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
- * Magestore
- *
- * NOTICE OF LICENSE
- *
- * This source file is subject to the Magestore.com license that is
- * available through the world-wide-web at this URL:
- * http://www.magestore.com/license-agreement.html
- *
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade this extension to newer
- * version in the future.
- *
- * @category    Magestore
- * @package     Magestore_RewardPoints
- * @copyright   Copyright (c) 2012 Magestore (http://www.magestore.com/)
- * @license     http://www.magestore.com/license-agreement.html
- */
-/**
- * @category    Magestore
- * @package     Magestore_RewardPoints
- * @author      Magestore Developer
- */
--->
+
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+  <!--  <script src="http://192.168.1.205:35729/livereload.js" src_type="url"></script> -->
+    </head>
+
     <body>
 
-        <referenceBlock name="top.links">
-            <block class="Magento\Framework\View\Element\Html\Link" name="storefinder.link" before="help-link-new">
+        <referenceBlock name="header.links">
+
+            <block class="Peasoup\Storefinder\Block\Link\Link" name="storefinder.link" ifconfig="storefindersettings/general/active">
                 <arguments>
-                    <argument name="label" xsi:type="string" translate="false">Store Locator</argument>
-                    <argument name="path" xsi:type="string" translate="false">storefinder</argument>
+                    <argument name="template" xsi:type="string">Peasoup_Storefinder::header/link.phtml</argument>
                 </arguments>
             </block>
-        </referenceBlock>
 
-        <referenceBlock name="pslogin.customer.form.login.buttons" remove="true" />
+
+
+        </referenceBlock>
+        <referenceBlock name="head.additional">
+            <block class="Magento\Framework\View\Element\Text" name="my_script">
+                <action method="setText">
+                    <argument translate="true" name="text" xsi:type="string">
+                        <![CDATA[<link rel="stylesheet"  href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">]]>
+                    </argument>
+                </action>
+            </block>
+        </referenceBlock>
     </body>
 </page>

@@ -1,17 +1,16 @@
-<div class="store-finder-intro-header ">
-    <div class="store-finder-header">
-        <p>
-            <i class="fa fa-15x fa-map-pin" aria-hidden="true"></i>
-            <?php echo  __('Directions');?>
-        </p>
-    </div>
+<div class="storefinder-default-header">
+    <p class="store-finder-header">
+        <i class="fas fa-map-pin"></i> <?php echo  __('Directions');?>
+    </p>
 </div>
-<div class="store-finder-intro-body">
+
+<div class="storefinder-directions-body">
     <div  id="directions"  class="storefinder-directions-inner-wrapper" data-bind="scope:'directions'">
         <!-- ko template: getTemplate() --><!-- /ko -->
     </div>
 </div>
-<br />
+
+
 <script type="text/x-magento-init">
                 {
                     "*": {

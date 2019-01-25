@@ -1,4 +1,4 @@
-define(["jquery","storesModel", 'ko'], function ($,storesModel,ko) {
+define(["jquery","storesModel", 'searchModel','ko'], function ($,storesModel,searchModel,ko) {
 
     "use strict";
 
@@ -16,7 +16,6 @@ define(["jquery","storesModel", 'ko'], function ($,storesModel,ko) {
 
     var geocoder;
 
-
     var locationLatLang = {lat: 52.051532, lng: -0.798881};
 
     $.widget('storefinder.googleMap', {
@@ -33,11 +32,12 @@ define(["jquery","storesModel", 'ko'], function ($,storesModel,ko) {
             }
         },
 
-        _create: function () {
+        _create: function (config) {
             this._createMap();
             this._subscribeToStoreChange();
             this._subscribeToPostCode();
             this._subscribeToSliderChange();
+            this._calculateDistance();
         },
 
         _createMap: function() {
@@ -49,28 +49,52 @@ define(["jquery","storesModel", 'ko'], function ($,storesModel,ko) {
             });
         },
 
+        _calculateDistance: function() {
+            var self = this;
+            searchModel.postCode.subscribe(function() {
+                var returnedLatLang =  self._getlatLang(searchModel.postCode());
+            });
+
+            searchModel.returnedlatlang.subscribe(function() {
+
+                var testlatLng = new google.maps.LatLng(searchModel.returnedlatlang()[0].lat, searchModel.returnedlatlang()[0].lng);
+
+
+                for(var j in storesModel.storeCollection()){
+                    var markLatLng =  new google.maps.LatLng(storesModel.storeCollection()[j].latitude, storesModel.storeCollection()[j].longitude);
+                    var result = google.maps.geometry.spherical.computeDistanceBetween(testlatLng, markLatLng);
+
+
+                    var calculatedDistance = Math.round(result/1000);
+
+                    if(calculatedDistance > 1){
+
+                        storesModel.storeCollection.splice(j);
+
+                    }
+                }
+
+            });
+        },
+
         _subscribeToStoreChange: function() {
             var self = this;
-            storesModel.storeChange.subscribe(function() {
-                if(storesModel.storeChange()==1){
-                    self._clearMarkers();
-                    self._addMarkers(storesModel.stores);
-                }
+            storesModel.storeCollection.subscribe(function() {
+                self._clearMarkers();
+                self._addMarkers();
+
             });
         },
 
         _subscribeToSliderChange: function() {
             var self = this;
             storesModel.sliderChange.subscribe(function() {
-                if(storesModel.sliderChange()==="yes") {
-                    if(circleExists==1){
-                        self._removeRadiusCircle();
-                    }
-                    self._drawRadiusCircle(storesModel.sliderMiles(),locationLatLang);
-                }
-                else {
 
+                if(circleExists==1){
+                    self._removeRadiusCircle();
                 }
+                self._drawRadiusCircle(storesModel.sliderMiles(),locationLatLang);
+
             });
         },
 
@@ -89,11 +113,37 @@ define(["jquery","storesModel", 'ko'], function ($,storesModel,ko) {
             circleExists=1;
         },
 
+        _getlatLang: function(postCodeIn = null) {
+
+
+
+            geocoder = new google.maps.Geocoder();
+            var postcode = postCodeIn
+
+
+            geocoder.geocode({
+                componentRestrictions: {
+                    country: 'GB',
+                    postalCode: postcode
+                }
+            }, function(results, status) {
+                if (status == 'OK') {
+                    var longitudelocation = results[0].geometry.location.lng();
+                    var latitudelocation = results[0].geometry.location.lat();
+
+                    var latlng =  {lat: latitudelocation, lng:longitudelocation};
+                    searchModel.returnedlatlang.push(latlng);
+
+                }
+            });
+
+        },
+
         _getPostCodeLatLang: function(postCodeIn = null) {
 
             geocoder = new google.maps.Geocoder();
             var postcode = postCodeIn
-            console.log(postcode)
+
 
 
             geocoder.geocode({
@@ -115,11 +165,9 @@ define(["jquery","storesModel", 'ko'], function ($,storesModel,ko) {
             });
         },
 
-
         _removeRadiusCircle: function() {
             this.radiusCircle.setMap(null);
         },
-
 
         _subscribeToPostCode: function() {
             var self = this;
@@ -144,9 +192,10 @@ define(["jquery","storesModel", 'ko'], function ($,storesModel,ko) {
         _calculateAndDisplayRoute: function(directionsService, directionsDisplay) {
             var self = this;
             var mode = self._getTravelMode();
+
             directionsService.route({
                 origin: storesModel.postCode(),
-                destination: new google.maps.LatLng(storesModel.stores[0].latitude,storesModel.stores[0].longitude),
+                destination: new google.maps.LatLng(storesModel.storeCollection()[0].latitude,storesModel.storeCollection()[0].longitude),
                 travelMode: mode
             }, function(response, status) {
                 if (status === 'OK') {
@@ -158,7 +207,6 @@ define(["jquery","storesModel", 'ko'], function ($,storesModel,ko) {
 
         },
 
-
         _getTravelMode: function() {
             var mode = "";
             $('.travel-mode').each(function() {
@@ -169,7 +217,6 @@ define(["jquery","storesModel", 'ko'], function ($,storesModel,ko) {
             return mode;
         },
 
-
         _clearMarkers: function() {
             for(var i=0; i < markers.length; i++) {
                 markers[i].setMap(null);
@@ -177,8 +224,8 @@ define(["jquery","storesModel", 'ko'], function ($,storesModel,ko) {
             markers = [];
         },
 
-
-        _addMarkers: function(data) {
+        _addMarkers: function() {
+            var data = storesModel.storeCollection();
             if(data.length > 0) {
                 this._setMapCenter(data[0]);
                 for (var i in data) {
@@ -192,6 +239,8 @@ define(["jquery","storesModel", 'ko'], function ($,storesModel,ko) {
                     this._getInfoWindowContent(infoWindow, data[i]);
                 }
             }
+
+
         },
 
         _setMapCenter: function(data) {

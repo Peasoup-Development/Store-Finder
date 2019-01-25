@@ -1,7 +1,12 @@
 <?php $store = $this->getData('store');?>
 <div class="store-content-wrapper">
     <div class="store-content-mini-right">
+
         <h3><?php echo $store['data']['name']?></h3>
+
+
+<div data-gallery-role=gallery-placeholder-inforomation-window></div>
+
         <table>
             <tr>
                 <th>
@@ -46,3 +51,76 @@
         </table>
     </div>
 </div>
+
+<?php if(array_key_exists('images',$store['data'])):?>
+    <?php $count=1;?>
+    <?php $totalCount = count($store['data']['images']);?>
+<script type="text/x-magento-init">
+  {
+        "[data-gallery-role=gallery-placeholder-inforomation-window]": {
+            "mage/gallery/gallery": {
+                "mixins":["magnifier/magnify"],
+                "magnifierOpts": {"fullscreenzoom":"20","top":"","left":"","width":"","height":"","eventType":"hover","enabled":"false"},
+                "data": [
+                    <?php foreach($store['data']['images'] as $key=>$storeImage):?>
+                    {
+                    "thumb": "<?php echo $this->getMediaPath()."storefinder/store/".$storeImage['image']?>",
+                    "img": "<?php echo $this->getMediaPath()."storefinder/store/".$storeImage['image']?>",
+                    "full": "<?php echo $this->getMediaPath()."storefinder/store/".$storeImage['image']?>",
+                    "caption": "Caption",
+                    "position": "<?php echo $count?>",
+                    "isMain": "<?php echo  ($storeImage['default_image']==1 ? 'true' :'false')?>"
+                    <?php $count++?>
+        <?php if($totalCount == ($count-1)):?>
+                    }
+                    <?php else:?>
+                    },
+                    <?php endif;?>
+
+    <?php endforeach;?>
+                ],
+
+                "options": {
+                    "nav": "thumbs",
+                    "loop": true,
+                    "keyboard": true,
+                    "arrows": false,
+                    "allowfullscreen": false,
+                    "showCaption": false,
+                    "thumbwidth": 101,
+                    "thumbheight": 90,
+                    "height": 400,
+                    "maxheight":320,
+                    "maxwidth":450,
+                    "transitionduration": 500,
+                    "transition": "slide",
+                    "navarrows": false,
+                    "navtype": "slides",
+                    "navdir": "horizontal"
+                },
+                "fullscreen": {
+                    "nav": false,
+                    "loop": true,
+                    "navdir": "horizontal",
+                    "navtype": "slides",
+                    "arrows": false,
+                    "showCaption": false,
+                    "transitionduration": 500,
+                    "transition": "dissolve"
+                },
+                "breakpoints": {
+                                "mobile":{
+                                            "conditions":{
+                                            "max-width":"767px"},
+                                            "options":{
+                                            "options":{
+
+                                            }
+                                            }
+                                }
+                                }
+                }
+        }
+    }
+</script>
+<?php endif;?>

@@ -1,0 +1,32 @@
+
+<fieldset class="admin__fieldset" >
+    <div class="admin__field">
+        <div class="admin__field-label">
+            <label>
+                <span>Map Preview</span>
+            </label>
+        </div>
+        <div class="admin__field-control" >
+            <div id="map" style="height:500px;width:600px"></div>
+        </div>
+    </div>
+</fieldset>
+
+
+<script>
+    require([
+        'jquery',
+        'googleMap'  // the alias for "mage/accordion"
+    ], function ($,googleMap) {
+        $(function () { // to ensure that code evaluates on page load
+            $('#map')  // we expect that page contains the <tag data-role="example">..</tag> markup
+                .googleMap(
+                    {
+                        latitude:15,
+                        longitude:20
+                    }
+
+                );
+        });
+    });
+</script>

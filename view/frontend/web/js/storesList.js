@@ -4,6 +4,7 @@ define(['uiComponent', 'ko','storesModel','jquery',"jquery/ui"], function ( Comp
     return Component.extend({
 
         stores : ko.observableArray([]),
+
         _baseMediaUrl : null,
 
         initialize: function (config) {
@@ -22,44 +23,51 @@ define(['uiComponent', 'ko','storesModel','jquery',"jquery/ui"], function ( Comp
                     type:'GET',
                     dataType:'json',
                 }).done(function (data) {
-                    storesModel.refreshStores(data,'list');
+                    for(var i in data ){
+                        storesModel.storeCollection.push(data[i]);
+                    }
+
                 });
             }
             else {
+
                 $.ajax({
                     url:'/storefinder/index/stores',
                     type:'GET',
                     data: 'id='+this.id,
                     dataType:'json',
                 }).done(function (data) {
-                    storesModel.refreshStores(data,'view');
+                    for(var i in data ){
+                        storesModel.storeCollection.push(data[i]);
+                    }
                 });
             }
         },
 
         _subscribeToStoreChange: function() {
-            storesModel.storeChange.subscribe(function() {
-                if(storesModel.storeChange()==1){
-                    self._updateArray(storesModel.stores);
-                }
+            storesModel.storeCollection.subscribe(function() {
+                self._updateArray();
             });
         },
 
         _updateArray:function(stores) {
+            var data = storesModel.storeCollection();
             this.stores.removeAll();
-            for(var i in stores){
+            for(var i in data){
                 this.stores.push({
-                    id:stores[i].store_id,
-                    name:stores[i].name,
-                    address1:stores[i].address1,
-                    address2:stores[i].address2,
-                    town:stores[i].town,
-                    country:stores[i].country,
-                    postcode:stores[i].postcode,
-                    url:"/storefinder/vape-shop-"+stores[i].name.replace(/\s+/g, '-').toLowerCase(),
-                    image: this._baseMediaUrl + stores[i].image,
+                    id:data[i].store_id,
+                    name:data[i].name,
+                    address1:data[i].address1,
+                    address2:data[i].address2,
+                    town:data[i].town,
+                    country:data[i].country,
+                    postcode:data[i].postcode,
+                    telephone:data[i].telephone,
+                    url:"/storefinder/vape-shop-"+data[i].name.replace(/\s+/g, '-').toLowerCase(),
+                    image: this._baseMediaUrl + data[i].images[0].image,
                 })
             }
+
         },
     });
 });

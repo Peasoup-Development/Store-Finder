@@ -67,7 +67,6 @@
         </field>
 
 
-        <!-- This field represents form id and is hidden -->
         <field name="name">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
@@ -90,7 +89,7 @@
         </field>
 
 
-        <!-- This field represents form id and is hidden -->
+
         <field name="synopsis">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
@@ -113,8 +112,6 @@
 
 
 
-
-        <!-- This field represents form id and is hidden -->
         <field name="notes">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
@@ -133,7 +130,6 @@
 
 
     </fieldset>
-
 
     <fieldset name="addressdetails">
 
@@ -243,8 +239,6 @@
 
     </fieldset>
 
-
-
     <fieldset name="contactdetails">
 
         <argument name="data" xsi:type="array">
@@ -282,9 +276,6 @@
 
     </fieldset>
 
-
-
-
     <fieldset name="openinghours">
 
         <argument name="data" xsi:type="array">
@@ -292,6 +283,8 @@
                 <item name="label" xsi:type="string" translate="true">Opening Hours</item>
             </item>
         </argument>
+
+
 
         <field name="monday">
             <argument name="data" xsi:type="array">
@@ -378,7 +371,7 @@
             </argument>
         </field>
 
-        <field name="bank">
+        <field name="bank_holiday">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="visible" xsi:type="boolean">true</item>
@@ -392,58 +385,6 @@
 
     </fieldset>
 
-
-    <fieldset name="socialsettings">
-
-        <argument name="data" xsi:type="array">
-            <item name="config" xsi:type="array">
-                <item name="label" xsi:type="string" translate="true">Social Settings</item>
-            </item>
-        </argument>
-
-
-        <field name="facebook_page_id">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="visible" xsi:type="boolean">true</item>
-                    <item name="dataType" xsi:type="string">text</item>
-                    <item name="formElement" xsi:type="string">input</item>
-                    <item name="source" xsi:type="string">stores</item>
-                    <item name="label" xsi:type="string">Facebook Page ID</item>
-                </item>
-            </argument>
-        </field>
-
-
-        <field name="facebook_access_token">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="visible" xsi:type="boolean">true</item>
-                    <item name="dataType" xsi:type="string">text</item>
-                    <item name="formElement" xsi:type="string">input</item>
-                    <item name="source" xsi:type="string">stores</item>
-                    <item name="label" xsi:type="string">Facebook Page Access Token</item>
-                </item>
-            </argument>
-        </field>
-
-
-        <field name="placeId">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="visible" xsi:type="boolean">true</item>
-                    <item name="dataType" xsi:type="string">text</item>
-                    <item name="formElement" xsi:type="string">input</item>
-                    <item name="source" xsi:type="string">stores</item>
-                    <item name="label" xsi:type="string">Google Place ID</item>
-                </item>
-            </argument>
-        </field>
-
-
-    </fieldset>
-
-
     <fieldset name="mapsettings">
 
         <argument name="data" xsi:type="array">
@@ -451,7 +392,6 @@
                 <item name="label" xsi:type="string" translate="true">Map Settings</item>
             </item>
         </argument>
-
 
         <field name="longitude">
             <argument name="data" xsi:type="array">
@@ -464,7 +404,6 @@
                 </item>
             </argument>
         </field>
-
 
         <field name="latitude">
             <argument name="data" xsi:type="array">
@@ -479,15 +418,53 @@
         </field>
 
 
-
-        <field name="bar">
+        <field name="postcodeSearch">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="label" xsi:type="string">Sound Check</item>
                     <item name="visible" xsi:type="boolean">true</item>
-                    <item name="formElement" xsi:type="string">fileUploader</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">input</item>
+
+                    <item name="label" xsi:type="string">Postcode Search</item>
+                </item>
+            </argument>
+        </field>
+
+
+        <htmlContent name="peasoup_storefinder_admin_map_postcode_button">
+            <block class="Peasoup\Storefinder\Block\Adminhtml\Storefinder\Store\Edit\Form\Map" name="peasoup_storefinder_form_map_button" template="Peasoup_Storefinder::tab/map/button.phtml" />
+        </htmlContent>
+
+        <htmlContent name="peasoup_storefinder_admin_map">
+            <block class="Peasoup\Storefinder\Block\Adminhtml\Storefinder\Store\Edit\Form\Map" name="peasoup_storefinder_form_map" template="Peasoup_Storefinder::tab/map.phtml" />
+        </htmlContent>
+
+    </fieldset>
+
+    <fieldset name="images">
+
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="label" xsi:type="string" translate="true">Store Images</item>
+            </item>
+        </argument>
+
+
+        <field name="image">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">string</item>
+                    <item name="isMultipleFiles" xsi:type="string">true</item>
+                    <item name="sortable" xsi:type="string">true</item>
+                    <item name="source" xsi:type="string">images</item>
+                    <item name="label" xsi:type="string" translate="true">Image</item>
+                    <item name="visible" xsi:type="boolean">true</item>
+                    <item name="formElement" xsi:type="string">imageUploader</item>
+                    <item name="elementTmpl" xsi:type="string">ui/form/element/uploader/uploader</item>
+                    <item name="previewTmpl" xsi:type="string">Peasoup_Storefinder/image-previewer</item>
+
                     <item name="uploaderConfig" xsi:type="array">
-                        <item name="url" xsi:type="url" path="*/*/upload"/>
+                        <item name="url" xsi:type="url" path="storefinder/storefinder/upload"/>
                     </item>
                 </item>
             </argument>
@@ -497,37 +474,4 @@
     </fieldset>
 
 
-<!--
-    <htmlContent name="gallery" sortOrder="22">
-
-
-
-
-
-        <argument name="data" xsi:type="array">
-            <item name="wrapper" xsi:type="array">
-                <item name="label" xsi:type="string" translate="true">Images</item>
-                <item name="collapsible" xsi:type="boolean">true</item>
-                <item name="opened" xsi:type="boolean">false</item>
-            </item>
-        </argument>
-        <settings>
-            <wrapper>
-                <canShow>true</canShow>
-                <componentType>fieldset</componentType>
-            </wrapper>
-        </settings>
-        <block name="gallery" class="Peasoup\Storefinder\Block\Adminhtml\Storefinder\Store\Helper\Form\Gallery">
-            <block class="Peasoup\Storefinder\Block\Adminhtml\Storefinder\Store\Helper\Form\Gallery\Content"  as="content" template="Peasoup_Storefinder::helper/gallery.phtml">
-                <arguments>
-                    <argument name="config" xsi:type="array">
-                        <item name="parentComponent" xsi:type="string">storefinder_storefinder_form.storefinder_storefinder_form.block_gallery.block_gallery</item>
-                    </argument>
-                </arguments>
-            </block>
-        </block>
-
-    </htmlContent>
-
--->
 </form>

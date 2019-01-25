@@ -9,4 +9,5 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
     {
         $this->_init('Peasoup\Storefinder\Model\Stores', 'Peasoup\Storefinder\Model\ResourceModel\Stores');
     }
+
 }

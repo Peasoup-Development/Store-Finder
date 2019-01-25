@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!--
+  ~  * @author Robert Williamson <robert@peasoup-development.com>
+  ~  * @company Peasoup Development Limited
+  ~
+  -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <storefindersettings>
+            <general>
+                <active>0</active>
+                <storefinderintroductiontitle>Welcome To Our Store Finder</storefinderintroductiontitle>
+                <storefinderintroduction></storefinderintroduction>
+            </general>
+        </storefindersettings>
+    </default>
+</config>

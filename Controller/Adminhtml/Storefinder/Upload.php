@@ -7,60 +7,67 @@ use Magento\Framework\App\Filesystem\DirectoryList;
 
 class Upload extends \Magento\Backend\App\Action
 {
-
+    /**
+     * Image uploader
+     *
+     * @var \Magento\Catalog\Model\ImageUploader
+     */
+    protected $imageUploader;
+    /**
+     * @var \Magento\Framework\Controller\Result\JsonFactory
+     */
+    private $resultJsonFactory;
 
     /**
-     * @var ReviewsFactory
+     * Upload constructor.
+     *
+     * @param \Magento\Backend\App\Action\Context $context
+     * @param \Magento\Catalog\Model\ImageUploader $imageUploader
      */
-    private $reviewsFactory;
-    /**
-     * @var \Magento\Framework\Controller\Result\RawFactory
-     */
-    private $resultRawFactory;
-
     public function __construct(
-        Action\Context $context,
-        \Magento\Framework\Controller\Result\RawFactory $resultRawFactory
-    )
-    {
+        \Magento\Backend\App\Action\Context $context,
+        \Peasoup\Storefinder\Model\ImageUploader $imageUploader,
+        \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
+    ) {
         parent::__construct($context);
-        $this->resultRawFactory = $resultRawFactory;
+        $this->imageUploader = $imageUploader;
+        $this->resultJsonFactory = $resultJsonFactory;
     }
 
+    /**
+     * Check admin permissions for this controller
+     *
+     * @return boolean
+     */
+    protected function _isAllowed()
+    {
+        return true;
+       return $this->_authorization->isAllowed('Peasoup_Stoefinder::storefinder');
+    }
+
+    /**
+     * Upload file controller action
+     *
+     * @return \Magento\Framework\Controller\ResultInterface
+     */
     public function execute()
     {
+        $imageId = $this->_request->getParam('param_name', 'image');
         try {
-            $uploader = $this->_objectManager->create(
-                \Magento\MediaStorage\Model\File\Uploader::class,
-                ['fileId' => 'image']
-            );
-            $uploader->setAllowedExtensions(['jpg', 'jpeg', 'gif', 'png']);
-            /** @var \Magento\Framework\Image\Adapter\AdapterInterface $imageAdapter */
-            $imageAdapter = $this->_objectManager->get(\Magento\Framework\Image\AdapterFactory::class)->create();
-            $uploader->addValidateCallback('catalog_product_image', $imageAdapter, 'validateUploadFile');
-            $uploader->setAllowRenameFiles(true);
-            $uploader->setFilesDispersion(true);
-            /** @var \Magento\Framework\Filesystem\Directory\Read $mediaDirectory */
-            $mediaDirectory = $this->_objectManager->get(\Magento\Framework\Filesystem::class)->getDirectoryRead(DirectoryList::MEDIA.'');
+            $result = $this->imageUploader->saveFileToTmpDir($imageId);
 
-            $config = $this->_objectManager->get(\Peasoup\Storefinder\Model\Product\Media\Config::class);
-
-            $result = $uploader->save($mediaDirectory->getAbsolutePath($config->getBaseTmpMediaPath()));
-
-            unset($result['tmp_name']);
-            unset($result['path']);
-
-            $result['url'] = $this->_objectManager->get(\Peasoup\Storefinder\Model\Product\Media\Config::class)->getTmpMediaUrl($result['file']);
-            $result['file'] = $result['file'] . '.tmp';
-            die(print_r($result)."");
+            $result['cookie'] = [
+                'name' => $this->_getSession()->getName(),
+                'value' => $this->_getSession()->getSessionId(),
+                'lifetime' => $this->_getSession()->getCookieLifetime(),
+                'path' => $this->_getSession()->getCookiePath(),
+                'domain' => $this->_getSession()->getCookieDomain(),
+            ];
         } catch (\Exception $e) {
             $result = ['error' => $e->getMessage(), 'errorcode' => $e->getCode()];
         }
-
-        /** @var \Magento\Framework\Controller\Result\Raw $response */
-        $response = $this->resultRawFactory->create();
-        $response->setHeader('Content-type', 'text/plain');
-        $response->setContents(json_encode($result));
-        return $response;
+        $resultJson = $this->resultJsonFactory->create();
+        return $resultJson->setData($result);
+   //     return $this->resultFactory->create(ResultFactory::TYPE_JSON)->setData($result);
     }
 }

@@ -1,11 +1,19 @@
 <div id="storefinder" class="storefinder">
 
-    <div class="storefinder-intro-wrapper store-finder-margin">
-            <?php echo $this->getChildHtml('storefinder.intro');?>
+    <div id="storefinder-introduction" class="store-finder-margin">
+        <?php echo $this->getChildHtml('storefinder.home.introduction');?>
     </div>
 
-    <div class="storefinder-search-wrapper">
-            <?php echo $this->getChildHtml('storefinder.storefinder');?>
+    <div id="storefinder-search" class="store-finder-margin">
+        <?php echo $this->getChildHtml('storefinder.home.search');?>
+    </div>
+
+    <div id="storefinder-list">
+            <?php echo $this->getChildHtml('storefinder.home.list');?>
+    </div>
+
+    <div id="storefinder-index-map">
+        <?php echo $this->getChildHtml('storefinder.home.map');?>
     </div>
 
 </div>

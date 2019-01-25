@@ -15,7 +15,7 @@ class Stores extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
      */
     protected function _construct()
     {
-        $this->_init('vapedirect_storefinder', 'store_id');
+        $this->_init('peasoup_storefinder', 'store_id');
     }
 
     /**

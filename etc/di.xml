@@ -1,6 +1,14 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+    <preference for="Peasoup\Storefinder\Api\StoresRepositoryInterface" type="Peasoup\Storefinder\Model\StoresRepository"/>
+    <preference for="Peasoup\Storefinder\Api\Data\StoresImagesInterface" type="Peasoup\Storefinder\Model\StoresImages" />
+    <preference for="Peasoup\Storefinder\Api\Data\StoresSearchResultInterface" type="Peasoup\Storefinder\Model\StoresSearchResult"/>
+
+
+    <preference for="Peasoup\Storefinder\Api\StoresImagesRepositoryInterface" type="Peasoup\Storefinder\Model\StoresImagesRepository"/>
     <preference for="Peasoup\Storefinder\Api\Data\StoresInterface" type="Peasoup\Storefinder\Model\Stores" />
+    <preference for="Peasoup\Storefinder\Api\Data\StoresImagesSearchResultInterface" type="Peasoup\Storefinder\Model\StoresImagesSearchResult"/>
 
     <virtualType name="Peasoup\Storefinder\Model\ResourceModel\Stores\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
         <arguments>
@@ -8,11 +16,32 @@
             <argument name="resourceModel" xsi:type="string">Peasoup\Storefinder\Model\ResourceModel\Stores</argument>
         </arguments>
     </virtualType>
+
     <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
         <arguments>
             <argument name="collections" xsi:type="array">
                 <item name="storefinder_storefinder_grid_data_source" xsi:type="string">Peasoup\Storefinder\Model\ResourceModel\Stores\Grid\Collection</item>
             </argument>
+        </arguments>
+    </type>
+
+    <virtualType name="Peasoup\Storefinder\StorefinderImageUpload" type="Peasoup\Storefinder\Model\ImageUploader">
+        <arguments>
+            <!-- Temporary file stored in pub/media/storefinder/tmp/store -->
+            <argument name="baseTmpPath" xsi:type="string">storefinder/tmp/store</argument>
+            <argument name="basePath" xsi:type="string">storefinder/store</argument>
+            <argument name="allowedExtensions" xsi:type="array">
+                <item name="jpg" xsi:type="string">jpg</item>
+                <item name="jpeg" xsi:type="string">jpeg</item>
+                <item name="gif" xsi:type="string">gif</item>
+                <item name="png" xsi:type="string">png</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Peasoup\Storefinder\Controller\Adminhtml\Storefinder\Upload">
+        <arguments>
+            <argument name="imageUploader" xsi:type="object">Peasoup\Storefinder\StorefinderImageUpload</argument>
         </arguments>
     </type>
 

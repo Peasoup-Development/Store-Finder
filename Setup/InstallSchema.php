@@ -14,7 +14,7 @@ class InstallSchema implements InstallSchemaInterface
         $setup->startSetup();
 
         $table = $setup->getConnection()->newTable(
-            $setup->getTable('vapedirect_storefinder')
+            $setup->getTable('peasoup_storefinder')
         )->addColumn(
             'store_id',
             \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
@@ -106,7 +106,7 @@ class InstallSchema implements InstallSchemaInterface
             [],
             'Opening Hours Sunday'
         )->addColumn(
-            'bank',
+            'bank_holiday',
             \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
             255,
             [],

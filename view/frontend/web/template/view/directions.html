@@ -1,12 +1,23 @@
-<div class="store-content-wrapper row">
-    <br />
-    <ul class="vertical" id="mode">
-        <li class="DRIVING active col-xs-3 travel-mode"><p><i class="fa fa-15x fa-car"></i></p></li>
-        <li class="TRANSIT col-xs-3 travel-mode"><p><i class="fa fa-15x fa-bus" aria-hidden="true"></i></p></li>
-        <li class="BICYCLING col-xs-3 travel-mode"><p><i class="fa fa-15x fa-bicycle" aria-hidden="true" style="font-size:1.7em;"></i></p></li>
-        <li class="WALKING col-xs-3 travel-mode"><p><i class="fa fa-15x fa-male" aria-hidden="true"></i></p></li>
-    </ul>
-    <div class="table-responsive  col-sm-12">
+<div class="store-content-wrapper">
+    <table class="travel-mode-table">
+        <tr>
+            <td class="DRIVING active travel-mode">
+                <i class="fa fa-2x fa-car"></i>
+            </td>
+            <td class="TRANSIT travel-mode">
+                <i class="fa fa-2x fa-bus" aria-hidden="true"></i>
+            </td>
+            <td class="BICYCLING travel-mode">
+                <i class="fa fa-2x fa-bicycle" aria-hidden="true"></i>
+            </td>
+            <td class="WALKING travel-mode">
+                <i class="fa fa-2x fa-male" aria-hidden="true"></i>
+            </td>
+
+        </tr>
+    </table>
+
+    <div class="table-responsive">
         <form>
             <input type="text" id="searchRoute" name="searchRoute" placeholder="Find Directions..."  data-validate="{'required-entry':true}"/>
             <br />
@@ -15,9 +26,9 @@
         </form>
     </div>
 
-    <div class="col-md-12">
+    <div>
         <hr />
-        <br />
-        <div id="directions-panel" style="max-height:242px;overflow:scroll;overflow-x: hidden;" class="col-sm-12"></div>
+
+        <div id="directions-panel" ></div>
     </div>
 </div>

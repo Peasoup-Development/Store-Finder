@@ -25,8 +25,11 @@ class Index extends \Magento\Framework\App\Action\Action
 
     public function execute()
     {
+
+
         $resultPage = $this->_resultPageFactory->create();
         $this->_store_id = $this->_request->getParam('id');
+
 
 
         // Add breadcrumb

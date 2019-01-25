@@ -1,8 +1,5 @@
 <?php
-/**
- * Copyright © 2016 AionNext Ltd. All rights reserved.
- * See COPYING.txt for license details.
- */
+
 namespace Peasoup\Storefinder\Ui\Component\Listing\Column;
 
 use Magento\Framework\UrlInterface;
@@ -16,8 +13,8 @@ class StoreActions extends Column
     /**
      * Url path
      */
-    const URL_PATH_EDIT = 'storefinderadmin/storefinder/edit';
-    const URL_PATH_DELETE = 'storefinderadmin/storefinder/delete';
+    const URL_PATH_EDIT = 'storefinder/storefinder/edit';
+    const URL_PATH_DELETE = 'storefinder/storefinder/delete';
 
     /**
      * @var UrlInterface
@@ -61,7 +58,7 @@ class StoreActions extends Column
                             'href' => $this->urlBuilder->getUrl(
                                 static::URL_PATH_EDIT,
                                 [
-                                    'store_id' => $item['store_id']
+                                    'id' => $item['store_id']
                                 ]
                             ),
                             'label' => __('Edit')
@@ -70,7 +67,7 @@ class StoreActions extends Column
                             'href' => $this->urlBuilder->getUrl(
                                 static::URL_PATH_DELETE,
                                 [
-                                    'store_id' => $item['store_id']
+                                    'id' => $item['store_id']
                                 ]
                             ),
                             'label' => __('Delete'),

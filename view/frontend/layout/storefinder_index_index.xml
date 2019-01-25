@@ -1,22 +1,16 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../../../lib/internal/Magento/Framework/View/Layout/etc/page_configuration.xsd" layout="1column">
-<body>
-    <referenceContainer name="content">
-        <block class="Peasoup\Storefinder\Block\Storefinder" name="storefinder.wrapper" template="Peasoup_Storefinder::index.phtml" before="-" >
-
-            <block class="Magento\Cms\Block\Block" name="storefinder.intro">
-                <arguments>
-                    <argument name="block_id" xsi:type="string">storefinder-intro</argument>
-                </arguments>
+    <body>
+        <referenceContainer name="content">
+            <block class="Peasoup\Storefinder\Block\Storefinder" name="storefinder.wrapper" template="Peasoup_Storefinder::index.phtml" before="-" ifconfig="storefindersettings/general/active">
+                <block class="Peasoup\Storefinder\Block\Storefinder" name="storefinder.home.introduction" template="Peasoup_Storefinder::index/introduction.phtml" before="-" />
+                <block class="Peasoup\Storefinder\Block\Storefinder" name="storefinder.home.search" template="Peasoup_Storefinder::index/search.phtml" before="-" />
+                <block class="Peasoup\Storefinder\Block\Storefinder" name="storefinder.home.list" template="Peasoup_Storefinder::index/store-list.phtml" before="-" />
+                <block class="Peasoup\Storefinder\Block\Storefinder" name="storefinder.home.map" template="Peasoup_Storefinder::index/map.phtml" before="-" />
             </block>
-
-            <block class="Peasoup\Storefinder\Block\Storefinder" name="storefinder.storefinder" template="Peasoup_Storefinder::index/storefinder.phtml" before="-" />
-            <block class="Peasoup\Storefinder\Block\Storefinder" name="storefinder.list" template="Peasoup_Storefinder::index/list.phtml" before="-" />
-        </block>
-    </referenceContainer>
-    <referenceBlock name="head.additional">
-        <block class="Peasoup\Storefinder\Block\Storefinder" name="googlemaps.api" template="Peasoup_Storefinder::index/js/script.phtml" />
-    </referenceBlock>
-    <referenceBlock name="page.main.title" remove="true" />
-
-</body>
+        </referenceContainer>
+        <referenceBlock name="head.additional">
+            <block class="Peasoup\Storefinder\Block\Storefinder" name="googlemaps.api" template="Peasoup_Storefinder::index/js/script.phtml" ifconfig="storefindersettings/general/active" />
+        </referenceBlock>
+        <referenceBlock name="page.main.title" remove="true" />
+    </body>
 </page>

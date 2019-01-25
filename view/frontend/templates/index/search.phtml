@@ -1,0 +1,53 @@
+<div class="storefinder-default-header">
+    <p class="store-finder-header">
+        <i class="fas fa-search"></i> <?php echo  __('Search by Distance')?>
+    </p>
+</div>
+
+<div id="storefinder-search-body">
+    <div id="storefinder-postcode" data-bind="scope:'search'">
+        <input data-bind="textInput: postCode" type="text" name="postcodesearch" id="postcodeSearch" placeholder="Enter a location"/>
+    </div>
+
+    <div class="slider-wrapper smile-es-range-slider col-sm-3 col-md-4  col-lg-4" data-role="storefinder-distance-slider">
+        <div data-role="slider-bar"></div>
+    </div>
+
+    <div id="storefinder-buttons" data-bind="scope:'search'">
+        <div id="storefinder-buttons-distance-label" class="miles-text" data-role="to-label" style=""></div>
+        <div id="storefinder-buttons-container" >
+            <button class="action tocart primary">
+                        <span>
+                            <span>Reset</span>
+                        </span>
+            </button>
+            <button data-bind="click: _getNearestStores" class="action tocart primary" type="submit" title="Search for Store">
+                <span>Search</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/x-magento-init">
+                {
+                    "*": {
+                        "Magento_Ui/js/core/app": {
+                           "components": {
+                                "search": {
+                                    "component": "Peasoup_Storefinder/js/search",
+                                    "template" : "Peasoup_Storefinder/search-new"
+                                }
+                            }
+                        }
+                    },
+                    "[data-role=storefinder-googlemap]" : {
+                                               "googleMap" :{}
+                                               },
+                    "[data-role=storefinder-distance-slider]" : {
+                                               "distanceSlider" :{}
+                    }
+                }
+</script>
+
+

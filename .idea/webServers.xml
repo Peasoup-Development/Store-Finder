@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="7c3194c6-a4fb-451f-8a5e-b3b84e9bec4c" name="Home-Storefinder-Extension" url="http://192.168.1.205">
+        <fileTransfer host="192.168.1.205" port="22" accessType="SFTP">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" shareSSLContext="true" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+      <webServer id="97439eab-8267-4ac1-84a4-14ec9596ec7c" name="Peasoup-Storefinder-Extension" url="http://192.168.1.130">
+        <fileTransfer host="192.168.1.130" port="22" accessType="SFTP">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" shareSSLContext="true" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

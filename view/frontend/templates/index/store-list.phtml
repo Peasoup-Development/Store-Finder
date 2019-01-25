@@ -1,0 +1,32 @@
+    <div class="storefinder-default-header">
+        <p class="store-finder-header">
+            <i class="fas fa-store"></i> <?php echo  __('Store List')?>
+        </p>
+    </div>
+
+    <div id="stores"  class="storefinder-list-inner-wrapper" data-bind="scope:'stores'">
+        <!-- ko template: getTemplate() --><!-- /ko -->
+    </div>
+
+
+
+
+<script>
+    window.configs = <?php /* @escapeNotVerified */ echo \Zend_Json::encode($block->getConfig()); ?>;
+</script>
+<script type="text/x-magento-init">
+                {
+                    "*": {
+                        "Magento_Ui/js/core/app": {
+                           "components": {
+
+                                "stores": {
+                                    "component": "Peasoup_Storefinder/js/storesList",
+                                    "template" : "Peasoup_Storefinder/storeslist",
+                                    "baseUrl":"<?php echo $block->getMediaPath();?>"
+                                }
+                            }
+                        }
+                    }
+                }
+</script>

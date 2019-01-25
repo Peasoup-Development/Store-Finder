@@ -3,7 +3,7 @@
 namespace Peasoup\Storefinder\Block\Storefinder;
 
 use Peasoup\Storefinder\Model\StoresRepository;
-use Peasoup\Storefinder\Model\StoresimagesFactory;
+use Peasoup\Storefinder\Model\StoresImagesFactory;
 
 class View extends \Magento\Framework\View\Element\Template
 {
@@ -47,12 +47,13 @@ class View extends \Magento\Framework\View\Element\Template
 
     public function _prepareLayout()
     {
+
         $this->store_id = $this->_request->getParam('id');
 
         $this->_store = $this->_storesRepository->getById(  $this->store_id);
 
-        $this->_pageConfig->getTitle()->set(__(($this->_store->getName()." Vape Shop in ".$this->_store->getTown()." | Vape Direct"))); // add title here
-        $this->_pageConfig->setDescription( $this->_store->getSynopsis());
+      //  $this->_pageConfig->getTitle()->set(__(($this->_store->getName()." Vape Shop in ".$this->_store->getTown()." | Vape Direct"))); // add title here
+      //  $this->_pageConfig->setDescription( $this->_store->getSynopsis());
 
 
 
@@ -62,30 +63,12 @@ class View extends \Magento\Framework\View\Element\Template
         ['eq' => $this->_request->getParam('id')]
     )->setOrder('default_image','DESC');
 
+
+
     }
 
     public function getStore(){
         return $this->_store;
-    }
-
-    public function fixRating($rating){
-        switch ($rating) {
-            case "ONE":
-                return 1;
-                break;
-            case "TWO":
-                return 2;
-                break;
-            case "THREE":
-                return 3;
-                break;
-            case "FOUR":
-                return 4;
-                break;
-            case "FIVE":
-                return 5;
-                break;
-        }
     }
 
     public function getStoreImages(){

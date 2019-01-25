@@ -1,16 +1,21 @@
 <?php
 /**
- * Copyright © 2016 AionNext Ltd. All rights reserved.
- * See COPYING.txt for license details.
+ *  * @author Robert Mark Williamson <robert@peasoup-development.com>
+ *  * @company Peasoup Development Limited
+ *
  */
+
 namespace Peasoup\Storefinder\Controller\Adminhtml\Storefinder;
 
 use Peasoup\Storefinder\Model\StoresFactory;
-use Peasoup\Storefinder\Model\ResourceModel\Storesimages;
-use Peasoup\Storefinder\Model\StoresImagesFactory;
-use Magento\Framework\App\Filesystem\DirectoryList;
+use Peasoup\Storefinder\Api\StoresRepositoryInterfaceFactory;
+use Peasoup\Storefinder\Api\StoresImagesRepositoryInterfaceFactory;
+use Peasoup\Storefinder\Api\Data\StoresInterfaceFactory;
+use Peasoup\Storefinder\Api\Data\StoresImagesInterfaceFactory;
+use \Magento\Framework\Api\SearchCriteriaInterfaceFactory;
+use \Magento\Framework\Api\Filter;
+use \Magento\Framework\Api\Search\FilterGroup;
 
-ini_set('display_errors',1);
 class Save extends \Peasoup\Storefinder\Controller\Adminhtml\Storefinder
 {
     /**
@@ -33,6 +38,31 @@ class Save extends \Peasoup\Storefinder\Controller\Adminhtml\Storefinder
      * @var \Magento\MediaStorage\Model\File\UploaderFactory
      */
     private $fileUploaderFactory;
+    /**
+     * @var StoresRepositoryInterfaceFactory
+     */
+    private $storesRepositoryInterfaceFactory;
+
+    /**
+     * @var StoresInterfaceFactory
+     */
+    private $storesInterfaceFactory;
+    /**
+     * @var StoresImagesRepositoryInterfaceFactory
+     */
+    private $storesImagesRepositoryInterfaceFactory;
+    /**
+     * @var SearchCriteriaInterfaceFactory
+     */
+    private $searchCriteriaInterface;
+    /**
+     * @var Filter
+     */
+    private $filter;
+    /**
+     * @var FilterGroup
+     */
+    private $filterGroups;
 
     /**
      * @param \Magento\Backend\App\Action\Context $context
@@ -42,18 +72,29 @@ class Save extends \Peasoup\Storefinder\Controller\Adminhtml\Storefinder
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
         \Magento\Framework\Registry $coreRegistry,
-        StoresFactory $storesFactory,
+        StoresRepositoryInterfaceFactory $storesRepositoryInterfaceFactory,
+        StoresImagesRepositoryInterfaceFactory $storesImagesRepositoryInterfaceFactory,
+        StoresInterfaceFactory $storesInterfaceFactory,
         \Magento\Framework\App\Filesystem\DirectoryList $directoryList,
-        \Magento\MediaStorage\Model\File\UploaderFactory $fileUploaderFactory,
-        StoresImagesFactory $storesImagesFactory,
-        \Magento\Framework\View\Result\PageFactory $resultPageFactory
+        \Peasoup\Storefinder\Model\ImageUploader $fileUploaderFactory,
+        StoresImagesInterfaceFactory $storesImagesFactory,
+        \Magento\Framework\View\Result\PageFactory $resultPageFactory,
+        SearchCriteriaInterfaceFactory $searchCriteriaInterface,
+        Filter $filter,
+        FilterGroup $filterGroups
     ) {
         parent::__construct($context, $coreRegistry);
         $this->resultPageFactory = $resultPageFactory;
-        $this->storesFactory = $storesFactory;
+
         $this->storesImagesFactory = $storesImagesFactory;
         $this->directoryList = $directoryList;
         $this->fileUploaderFactory = $fileUploaderFactory;
+        $this->storesRepositoryInterfaceFactory = $storesRepositoryInterfaceFactory;
+        $this->storesInterfaceFactory = $storesInterfaceFactory;
+        $this->storesImagesRepositoryInterfaceFactory = $storesImagesRepositoryInterfaceFactory;
+        $this->searchCriteriaInterface = $searchCriteriaInterface;
+        $this->filter = $filter;
+        $this->filterGroups = $filterGroups;
     }
 
     /**
@@ -67,128 +108,104 @@ class Save extends \Peasoup\Storefinder\Controller\Adminhtml\Storefinder
         $data = $this->getRequest()->getPostValue();
 
 
+
         if ($data) {
-            $model = $this->storesFactory->create();
+            $storesRepository = $this->storesRepositoryInterfaceFactory->create();
+
+            $storesFactory = $this->storesInterfaceFactory->create();
 
             $id = false;
 
-            if(isset($data['storeinformation']['store_id'])){
+            if(array_key_exists('store_id',$data['storeinformation'])):
                 $id = $data['storeinformation']['store_id'];
-
-            }
-
-            $model = $model->load($id);
-            if (!$model->getId() && $id) {
-
-                 $this->messageManager->addErrorMessage(__('UHOH somehting went wrong'));
-             //   return $resultRedirect->setPath('*/*/');
-            }
+            endif;
 
             try {
+                $storesFactory->saveData($data);
+                $store = $storesRepository->save($storesFactory);
+                $this->saveImages($store->getId(),$data);
 
-                $model->saveItem($data)->save();
 
-                $this->messageManager->addSuccessMessage(__('You saved the Store'));
+                $this->messageManager->addSuccessMessage(__('Store saved successfully'));
 
                 if ($this->getRequest()->getParam('back')) {
 
-                    return $resultRedirect->setPath('*/*/edit', ['faq_id' => $this->model->getStaffId()]);
+                    return $resultRedirect->setPath('*/*/edit', ['store_id' => $this->model->getStoreId()]);
                 }
           //      return $resultRedirect->setPath('*/*/');
             } catch (\Exception $e) {
-                $this->messageManager->addErrorMessage($e, __('Something went wrong while saving the Review.'));
+                $this->messageManager->addErrorMessage($e, __('Something went wrong while saving the Store.'));
                 $this->messageManager->addErrorMessage($e->getMessage());
             }
-           if(isset($data['product'])){
-            $mediaGallery = $data['product'];
 
 
-            foreach($mediaGallery as $gallery){
-                foreach($gallery['images'] as $image){
-
-                    if($image['file']!=""){
-                        $imagesFactory = $this->storesImagesFactory->create();
-                        $imagesFactory->setImage(str_replace(".tmp","",$image['file']));
-                        if($image['position']==0){
-                            $imagesFactory->setDefaultImage(1);
-                        }
-                        else {
-                            $imagesFactory->setDefaultImage(0);
-                        }
-                        $imagesFactory->setStoreId($model->getId());
-                  //      $imagesFactory->save();
-
-
-                        try {
-
-
-                            $faq_path_upload = $this->directoryList->getRoot().DIRECTORY_SEPARATOR.DirectoryList::PUB.DIRECTORY_SEPARATOR.DirectoryList::MEDIA.DIRECTORY_SEPARATOR;
-
-
-
-                            $uploader = $this->fileUploaderFactory->create(['fileId' => 'image']);
-
-                            $uploader->setAllowedExtensions(['jpg', 'jpeg', 'gif', 'png']);
-
-                            $uploader->setAllowRenameFiles(true);
-
-                            $image = $uploader->save($faq_path_upload.Storesimages::PEASOUP_STAFF_FILE_PATH_UPLOADED);
-
-                            if (!empty($image['file'])) {
-                                $image_old = !empty($image['file']) ? $image['file'] : 'search-image-file.jpg';
-                                $data['image'] = Storesimages::PEASOUP_STAFF_FILE_PATH_ACCESS.$image['file'];
-                                try {
-
-                                    if (file_exists($faq_path_upload.$image_old)) {
-                                        unlink($faq_path_upload.$image_old);
-                                    }
-                                } catch (\Exception $e) {
-                                    $this->messageManager->addError($e->getMessage());
-                                }
-                            }
-                        } catch (\Exception $e) {
-                            if ($e->getCode() != \Magento\Framework\File\Uploader::TMP_NAME_EMPTY) {
-                                $this->messageManager->addErrorMessage(__('Can not save the Category icon: '.$e->getMessage()));
-
-                            }
-                        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                    }
-
-                }
-
-
-            }
-
-
-
-
-           }
 
             return $resultRedirect->setPath('*/*/index');
         }
 
+
+    }
+
+    public function deleteImages($storeId){
+
+        $storesImagesRepository = $this->storesImagesRepositoryInterfaceFactory->create();
+        $criteria = $this->searchCriteriaInterface->create();
+        $filter=  $this->filter  ->setField("store_id")
+            ->setValue($storeId)
+            ->setConditionType("eq");
+        $this->filterGroups ->setFilters([$filter]);
+        $criteria = $criteria->setFilterGroups([$this->filterGroups]);
+        $images = $storesImagesRepository->getList($criteria);
+
+        if($images->getTotalCount() > 0 ) {
+            $items =  $images->getItems();
+            foreach($items as $item) {
+                $storesImagesRepository->deleteById($item->getId());
+            }
+        }
+
+    }
+
+
+    public function saveImages($storeId,$data){
+
+        //delete images
+
+      $this->deleteImages($storeId);
+
+
+        if(array_key_exists('images',$data)):
+
+            $defaultImage=1;
+
+            foreach($data['images']['image'] as $image) {
+
+                $storesImagesRepository = $this->storesImagesRepositoryInterfaceFactory->create();
+
+                $storesImagesFactory = $this->storesImagesFactory->create();
+                //FILE DOES NOT EXIST IN FOLDER MOVE FORM TMP
+                if( !$this->fileUploaderFactory->checkIfNew($image['name'])) {
+                    try {
+                        $this->fileUploaderFactory->moveFileFromTmp($image['name']);
+
+                    } catch (\Exception $e) {
+                        $this->messageManager->addErrorMessage($e, __('Something went wrong while saving the Images'));
+                        $this->messageManager->addErrorMessage($e->getMessage());
+                    }
+                }
+                try {
+                    $storesImagesFactory->setData($image);
+                    $storesImagesFactory->setImage($image['name']);
+                    $storesImagesFactory->setDefaultImage($defaultImage);
+                    $storesImagesFactory->setStoreId($storeId);
+                    $storesImagesRepository->save($storesImagesFactory);
+                    $defaultImage=0;
+                }   catch (\Exception $e) {
+                    $this->messageManager->addErrorMessage($e, __('Something went wrong while saving the Images'));
+                    $this->messageManager->addErrorMessage($e->getMessage());
+                }
+            }
+        endif;
 
     }
 

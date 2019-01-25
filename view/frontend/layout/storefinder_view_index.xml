@@ -7,14 +7,14 @@
     <body>
 
         <referenceContainer name="content">
-            <block class="Peasoup\Storefinder\Block\Storefinder\View" name="storefinder.view.wrapper" template="view.phtml" before="-" >
-                <block class="Peasoup\Storefinder\Block\Storefinder\View" name="storefinder.view.intro" template="view/intro.phtml" before="-" />
-                <block class="Peasoup\Storefinder\Block\Storefinder\View" name="storefinder.view.information" template="view/information.phtml" before="-" />
-                <block class="Peasoup\Storefinder\Block\Storefinder\View" name="storefinder.view.directions" template="view/directions.phtml" before="-" />
-                <block class="Peasoup\Storefinder\Block\Storefinder\View" name="storefinder.view.opening.hours" template="view/opening-hours.phtml" before="-" />
-                <block class="Peasoup\Storefinder\Block\Storefinder\View" name="storefinder.view.gallery" template="view/gallery.phtml" before="-" />
-                <block class="Peasoup\Storefinder\Block\Storefinder\View" name="storefinder.view.reviews" template="view/reviews.phtml" before="-" />
-                <block class="Peasoup\Storefinder\Block\Storefinder" name="storefinder.map" template="map.phtml" before="-" />
+            <block class="Peasoup\Storefinder\Block\Storefinder\View" name="storefinder.view.wrapper" template="Peasoup_Storefinder::view.phtml" before="-" >
+                <block class="Peasoup\Storefinder\Block\Storefinder\View" name="storefinder.view.notification" template="Peasoup_Storefinder::view/notification.phtml" before="-" />
+                <block class="Peasoup\Storefinder\Block\Storefinder\View" name="storefinder.view.introduction" template="Peasoup_Storefinder::view/introduction.phtml" before="-" />
+                <block class="Peasoup\Storefinder\Block\Storefinder\View" name="storefinder.view.information" template="Peasoup_Storefinder::view/information.phtml" before="-" />
+                <block class="Peasoup\Storefinder\Block\Storefinder\View" name="storefinder.view.directions" template="Peasoup_Storefinder::view/directions.phtml" before="-" />
+                <block class="Peasoup\Storefinder\Block\Storefinder\View" name="storefinder.view.opening.hours" template="Peasoup_Storefinder::view/opening-hours.phtml" before="-" />
+                <block class="Peasoup\Storefinder\Block\Storefinder\View" name="storefinder.view.gallery" template="Peasoup_Storefinder::view/gallery.phtml" before="-" />
+                <block class="Peasoup\Storefinder\Block\Storefinder" name="storefinder.view.map" template="Peasoup_Storefinder::index/map.phtml" before="-" />
             </block>
         </referenceContainer>
 
